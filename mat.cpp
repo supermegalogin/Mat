@@ -70,18 +70,11 @@ void Mat::symbLegendre(long numb, int pole){
                     break;
                 }
 
-                if((num%4==1)||(pole%4==1)){
-                    mn=1;
-                    zam=pole%num;
-                    pole=num;
-                    num=zam;
+                mn=(num%4==1)||(pole%4==1)? 1:-1;
+                zam=pole%num;
+                pole=num;
+                num=zam;
 
-                }else {
-                    mn=-1;
-                    zam=pole%num;
-                    pole=num;
-                    num=zam;
-                }
                 rez*=mn;
             }
         }
