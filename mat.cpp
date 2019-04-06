@@ -43,15 +43,14 @@ int* Mat::Simple(long numb){
         }else i++;
 
     }
-}
+
+    rezMas[size]=-1;
+    return rezMas;}
 
 int Mat::symbLegendre(long numb, int pole){
     try {//проверка на четность
         if((pole%2==0)||(numb==0)) throw 0;
-    } catch (int x) {
-        cout<<endl<<"Ошибка ввода("<<x<<")";
-        exit(0);
-    }
+
     int mn=1,zam,newPole=pole;
     rez=1;
     if(numb<pole){
@@ -59,7 +58,7 @@ int Mat::symbLegendre(long numb, int pole){
         for (int i=0;i<=size;i++) {
 
             int num=rezMas[i],pole=newPole;
-
+            if(num==-1) throw 1;
             for (;;) {
                 if(num==1){
                     break;
@@ -90,6 +89,16 @@ int Mat::symbLegendre(long numb, int pole){
     }
 
     symbLegendre(numb,pole);
+    } catch (int x) {
+        switch (x) {
+        case 0: cout<<endl<<"Ошибка ввода("<<x<<")";
+            break;
+        case 1: cout<<endl<<"Не разложилось";
+            break;
+        }
+
+        exit(0);
+    }
 }
 
 void Mat::lemmaGausa(int numb, int pole){
@@ -118,8 +127,10 @@ void Mat::symbJacobi(long numb, int pole){
         rez=1;
         if(numb<pole){
             int* rezMas=Simple(pole);
+
             for (int i=0;i<=size;i++) {
                 numb=newNumb;
+                if(rezMas[i]==-1) throw 2;
 
                 for (;;) {
                     if(numb<rezMas[i])
@@ -166,10 +177,64 @@ void Mat::symbJacobi(long numb, int pole){
             break;
         case 1: cout<<endl<<"Результат сравнения= "<<rez<<endl;
             break;
+        case 2: cout<<endl<<"Не разложилось"<<endl;
+            break;
         default: cout<<endl<<"Неизвестная Ошибка ("<<x<<")"<<endl;
             break;
         }
 
     }
 
+}
+
+void Mat::fastPower(long numb, int pole){
+
+}
+
+int Mat::symbLegendre2(int numb, int pole){
+    int zam,mn=1;
+    try {
+        if(numb==0||pole==0) throw 100;
+        if(pole%2==0) throw 1;
+
+        if(numb<pole){
+            while (numb!=1) {
+                if(numb==2){
+                    zam=(pole*pole-1)/8;
+                    if(zam%2==1) rez*=(-1);
+                    break;
+                }
+
+                mn=(numb%4==1)||(pole%4==1)? 1:-1;
+                zam=pole%numb;
+                pole=numb;
+                numb=zam;
+
+                rez*=mn;
+
+                for (;;) {
+                    if(numb%2==0){
+                        zam=(pole*pole-1)/8;
+                        if(zam%2==1) rez*=(-1);
+                        numb=numb/2;
+                    }else break;
+                }
+            }
+            cout<<endl<<"Результат сравнения= "<<rez<<endl;
+            return rez;
+        }else {
+          zam=pole%numb;
+          pole=numb;
+          numb=zam;
+          symbLegendre2(numb,pole);
+        }
+
+    } catch (int x) {
+        switch (x) {
+        case 100: cout<<endl<<"ENTER NOT NULL";
+            break;
+        case 1: cout<<endl<<"Pole= 2n+1";
+            break;
+        }
+    }
 }
