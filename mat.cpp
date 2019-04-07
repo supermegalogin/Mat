@@ -187,9 +187,7 @@ void Mat::symbJacobi(long numb, int pole){
 
 }
 
-void Mat::fastPower(long numb, int pole){
-
-}
+//void Mat::fastPower(long numb, int pole){}
 
 int Mat::symbLegendre2(int numb, int pole){
     int zam,mn=1;
@@ -236,5 +234,31 @@ int Mat::symbLegendre2(int numb, int pole){
         case 1: cout<<endl<<"Pole= 2n+1";
             break;
         }
+        exit(0);
+    }
+}
+
+void Mat::ellCorPoint(int a, int b, int c, int pole){
+
+    try {
+        if(a==0&&b==0&&pole==0)throw 0;
+       int Y[pole/2], X[pole];
+       for (int i=0;i<=pole/2;i++)  Y[i]=i*i%pole;
+      for (int i=0;i<pole;i++)  X[i]=(a*i*i*i+b*i+c)%pole;
+       for (int i=0;i<pole;i++) {
+           for (int j=0;j<=pole/2;j++) {
+               if(X[i]==Y[j]) cout<<endl<<"( "<<i<<"; ±"<<j<<")";
+           }
+       }
+
+
+    } catch (int q) {
+        switch (q) {
+        case 0: cout<<endl<<"NOT elliptic curve"<<endl;
+            break;
+
+
+        }
+        exit(0);
     }
 }

@@ -11,6 +11,7 @@ public:
     void lemmaGausa(int numb, int pole); //Символ Лежандра по лемме Гаусса
     void symbJacobi(long numb, int pole); //Символ Якоби (произведение символов Лежандра)
     void fastPower(long numb, int pole);
+    void ellCorPoint(int a,int b,int c, int pole); //y^2=ax^3+bx+c
 private: int rez=1, size=0;
 };
 #endif // MAT_H
