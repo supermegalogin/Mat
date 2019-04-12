@@ -294,3 +294,25 @@ void Mat::ellCorPoint(int a, int b, int c, int pole){
         exit(0);
     }
 }
+
+void Mat::fastPower2(int numb, int pow, int pole){
+    try {
+        if(numb==0||pole==0) throw 0;
+        if(pow==1)throw 1;
+        int ans=numb;
+        pow=pow/2;
+        while (pow!=0) {
+           numb=numb*numb%pole;
+           if(pow%2==1) ans=ans*numb%pole;
+          pow=pow/2;
+        }
+        cout<<endl<<"Результат= "<<ans<<endl;
+    } catch (int q) {
+        switch (q) {
+        case 0: cout<<endl<<"NOT NULL"<<endl;
+            break;
+        case 1: cout<<endl<<"Результат= 1"<<endl;
+            break;
+        }
+    }
+}
