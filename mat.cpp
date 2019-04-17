@@ -7,6 +7,10 @@ Mat::Mat(){
     cout<<"Welcome Mat library"<<endl;
 }
 
+Mat::~Mat(){
+   cout<<endl<<"Exit Mat library"<<endl;
+}
+
 void Mat::Kv(int pole){
     cout<<endl<<"x mod p | x^2 mod p "<<endl;
     int n=(pole-1)/2;
@@ -312,6 +316,66 @@ void Mat::fastPower2(int numb, int pow, int pole){
         case 0: cout<<endl<<"NOT NULL"<<endl;
             break;
         case 1: cout<<endl<<"Результат= 1"<<endl;
+            break;
+        }
+    }
+}
+
+int Mat::Nod(int a, int b){
+    try {
+        if(a==0||b==0) throw 0;
+        cout<<endl<<"( "<<a<<", "<<b<<" )= ";
+        int q,r=-1;
+        for(;;) {
+            r=a%b;
+            if(r==0) break;
+            q=a/b;
+            a=b;
+            b=r;
+        }
+        cout<<b<<endl;
+        return b;
+    } catch (int q) {
+        switch (q) {
+        case 0: cout<<endl<<"NOT NULL";
+            break;
+        }
+    }
+}
+
+void Mat::Diof(int a, int b){
+
+    try {
+        if(Nod(a,b)!=1) throw 2;
+        cout<<endl<<a<<"x+"<<b<<"y=1";
+        int q,r;
+        int e11=1,e12=0,e21=0,e22=1; // ед матрица Е=((1 0) (0 1)
+        int E11,E12,E21,E22; // ячейки для замены при расчете умножения матриц
+
+        for (;;) {
+            r=a%b;
+            if(r==0) break;
+            q=a/b;
+            a=b;
+            b=r;
+            // Е=Е * ((0 1) (1 -q))
+            E11=e12;
+            E21=e22;
+            E12=e11-q*e12;
+            E22=e21-q*e22;
+            // Вставка замены
+            e11=E11;
+            e12=E12;
+            e21=E21;
+            e22=E22;
+
+        }
+
+        cout<<endl<<"x= "<<e12<<endl<<"y= "<<e22<<endl;
+
+    } catch (int q) {
+        switch (q) {
+        case 2: cout<<endl<<"Числа не взаимнопростые";
             break;
         }
     }
